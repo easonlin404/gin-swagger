@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/swaggo/cli"
 	"github.com/swaggo/swag"
@@ -15,6 +16,7 @@ const (
 	generalInfoFlag      = "generalInfo"
 	propertyStrategyFlag = "propertyStrategy"
 	outputFlag           = "output"
+	outputTypesFlag      = "outputTypes"
 	parseVendorFlag      = "parseVendor"
 	parseDependencyFlag  = "parseDependency"
 	markdownFilesFlag    = "markdownFiles"
@@ -39,7 +41,12 @@ var initFlags = []cli.Flag{
 	cli.StringFlag{
 		Name:  outputFlag + ", o",
 		Value: "./docs",
-		Usage: "Output directory for all the generated files(swagger.json, swagger.yaml and doc.go)",
+		Usage: "Output directory for all the generated files (swagger.json, swagger.yaml and docs.go)",
+	},
+	cli.StringFlag{
+		Name:  outputTypesFlag + ", ot",
+		Value: "go,json,yaml",
+		Usage: "Output types of generated files (docs.go, swagger.json, swagger.yaml) like go,json,yaml",
 	},
 	cli.BoolFlag{
 		Name:  parseVendorFlag,
@@ -65,11 +72,17 @@ func initAction(c *cli.Context) error {
 		return fmt.Errorf("not supported %s propertyStrategy", strategy)
 	}
 
+	outputTypes := strings.Split(c.String(outputTypesFlag), ",")
+	if len(outputTypes) == 0 {
+		return fmt.Errorf("no output types specified")
+	}
+
 	return gen.New().Build(&gen.Config{
 		SearchDir:          c.String(searchDirFlag),
 		MainAPIFile:        c.String(generalInfoFlag),
 		PropNamingStrategy: strategy,
 		OutputDir:          c.String(outputFlag),
+		OutputTypes:        outputTypes,
 		ParseVendor:        c.Bool(parseVendorFlag),
 		ParseDependency:    c.Bool(parseDependencyFlag),
 		MarkdownFilesDir:   c.String(markdownFilesFlag),
