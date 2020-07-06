@@ -6,9 +6,9 @@ import (
 	"os"
 	"strings"
 
+	"github.com/jodlajodla/swag"
+	"github.com/jodlajodla/swag/gen"
 	"github.com/swaggo/cli"
-	"github.com/swaggo/swag"
-	"github.com/swaggo/swag/gen"
 )
 
 const (
