@@ -2,7 +2,7 @@ package alias_import
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/swaggo/swag/testdata/alias_import/api"
+	"github.com/jodlajodla/swag/testdata/alias_import/api"
 )
 
 // @title Swagger Example API

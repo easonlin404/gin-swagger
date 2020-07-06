@@ -16,7 +16,7 @@ import (
 	"github.com/go-openapi/spec"
 
 	"github.com/ghodss/yaml"
-	"github.com/swaggo/swag"
+	"github.com/jodlajodla/swag"
 )
 
 type genTypeWriter func(string, *spec.Swagger) error
@@ -284,7 +284,7 @@ import (
 	"strings"
 
 	"github.com/alecthomas/template"
-	"github.com/swaggo/swag"
+	"github.com/jodlajodla/swag"
 )
 
 var doc = ` + "`{{ printDoc .Doc}}`" + `
