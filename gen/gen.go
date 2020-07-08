@@ -284,7 +284,7 @@ import (
 	"strings"
 
 	"github.com/alecthomas/template"
-	"github.com/jodlajodla/swag"
+	"github.com/swaggo/swag"
 )
 
 var doc = ` + "`{{ printDoc .Doc}}`" + `

@@ -1,11 +1,12 @@
 package main
 
 import (
-	"github.com/gorilla/mux"
-	"github.com/jodlajodla/swag/example/markdown/api"
-	_ "github.com/jodlajodla/swag/example/markdown/docs"
-	httpSwagger "github.com/swaggo/http-swagger"
 	"net/http"
+
+	"github.com/gorilla/mux"
+	httpSwagger "github.com/swaggo/http-swagger"
+	"github.com/swaggo/swag/example/markdown/api"
+	_ "github.com/swaggo/swag/example/markdown/docs"
 )
 
 // @title Swagger Example API
