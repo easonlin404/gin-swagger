@@ -74,7 +74,7 @@ func TransToValidSchemeType(typeName string) string {
 		return NUMBER
 	case "bool":
 		return BOOLEAN
-	case "string":
+	case "string", "error":
 		return STRING
 	default:
 		return typeName // to support user defined types
@@ -99,7 +99,8 @@ func IsGolangPrimitiveType(typeName string) bool {
 		"float32",
 		"float64",
 		"bool",
-		"string":
+		"string",
+		"error":
 		return true
 	default:
 		return false
