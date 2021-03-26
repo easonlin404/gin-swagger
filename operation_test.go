@@ -158,6 +158,14 @@ func TestParseRouterCommentMethodMissingErr(t *testing.T) {
 	assert.Error(t, err)
 }
 
+func TestCategory(t *testing.T) {
+	comment := `/@Category a ,b, d`
+	operation := NewOperation(nil)
+	err := operation.ParseComment(comment, nil)
+	assert.NoError(t, err)
+	assert.Equal(t, operation.Categories, []string{"a", "b", "d"})
+}
+
 func TestParseResponseCommentWithObjectType(t *testing.T) {
 	comment := `@Success 200 {object} model.OrderRow "Error message, if code != 200`
 	operation := NewOperation(nil)
@@ -1697,4 +1705,22 @@ func TestParseCodeSamples(t *testing.T) {
 		err := operation.ParseComment(comment, nil)
 		assert.Error(t, err, "error was expected, as file does not exist")
 	})
+}
+
+func TestAllowedCategory(t *testing.T) {
+	assert.True(t, isAllowedCategory([]string{"// @category a"}, []string{"a"}))
+	assert.False(t, isAllowedCategory([]string{"// @category a"}, []string{"b"}))
+	assert.True(t, isAllowedCategory([]string{"", "// comment"}, nil))
+	assert.True(t, isAllowedCategory([]string{"", "// @category z"}, nil))
+	assert.False(t, isAllowedCategory([]string{}, []string{"a"}))
+	assert.False(t, isAllowedCategory([]string{"// @category b"}, []string{"a"}))
+}
+
+func TestParseComments(t *testing.T) {
+	comments := []string{`// @category z`, `// @summary ok`}
+	operation := NewOperation(nil)
+
+	err := operation.ParseComments(comments, nil)
+	assert.NoError(t, err)
+	assert.Equal(t, operation.Categories, []string{"z"})
 }
